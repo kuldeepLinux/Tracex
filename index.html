@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TraceX | Global Intelligence</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">TX</div>
+    <div class="logo-text">
+      <h2>TRACEX</h2>
+      <span>Global Intelligence</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="#" class="nav-item active" data-page="dashboard">
+      <span class="icon">◉</span> Dashboard
+    </a>
+    <a href="#" class="nav-item" data-page="map">
+      <span class="icon">🌍</span> Live Map
+    </a>
+    <a href="#" class="nav-item" data-page="logs">
+      <span class="icon">📊</span> IP Logs
+    </a>
+    <a href="#" class="nav-item" data-page="analytics">
+      <span class="icon">📈</span> Analytics
+    </a>
+    <a href="admin.php" class="nav-item">
+      <span class="icon">🔐</span> Admin Panel
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="status-dot"></div>
+    <span>SYSTEM ONLINE</span>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="breadcrumb">
+      <span class="page-name">Dashboard</span>
+      <span class="time" id="liveTime"></span>
+    </div>
+    <div class="user-info">
+      <span class="user">👤 KULDEEP</span>
+    </div>
+  </header>
+
+  <!-- Dashboard -->
+  <div class="content" id="content">
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon cyan">👥</div>
+        <div class="stat-data">
+          <span class="stat-value" id="totalVisits">0</span>
+          <span class="stat-label">Total Visits</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue">🌐</div>
+        <div class="stat-data">
+          <span class="stat-value" id="uniqueIPs">0</span>
+          <span class="stat-label">Unique IPs</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">🌍</div>
+        <div class="stat-data">
+          <span class="stat-value" id="countries">0</span>
+          <span class="stat-label">Countries</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">📡</div>
+        <div class="stat-data">
+          <span class="stat-value" id="isps">0</span>
+          <span class="stat-label">ISPs</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- World Map -->
+    <div class="map-container">
+      <div class="map-header">
+        <h3>🌍 LIVE GLOBAL TRACKING</h3>
+        <span class="live-badge">● LIVE</span>
+      </div>
+      <div id="worldMap" class="world-map"></div>
+    </div>
+
+    <!-- Recent Logs -->
+    <div class="logs-container">
+      <div class="logs-header">
+        <h3>📊 RECENT ACTIVITY</h3>
+        <a href="admin.php" class="view-all">View All →</a>
+      </div>
+      <div class="logs-list" id="logsList">
+        <p class="empty-msg">Koi activity nahi. Link share karein.</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Tracker Script -->
+<script>
+fetch('tracker.php', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+        lang: navigator.language,
+        platform: navigator.platform,
+        screen: window.screen.width + 'x' + window.screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        referrer: document.referrer || 'Direct',
+        url: window.location.href
+    })
+}).catch(e => console.log('Tracker:', e));
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
